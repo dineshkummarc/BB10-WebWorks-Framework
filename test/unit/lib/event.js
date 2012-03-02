@@ -17,12 +17,21 @@ var libRoot = __dirname + "/../../../lib/";
 
 describe("event", function () {
     var util = require(libRoot + "utils"),
-        event = require(libRoot + "event"),
-        webview = util.requireWebview();
+        event,
+        webview = {
+            create: jasmine.createSpy().andCallFake(function (done) {
+                done();
+            }),
+            executeJavascript: jasmine.createSpy()
+        };
+
+    beforeEach(function () {
+        spyOn(util, "requireWebview").andReturn(webview);
+        event = require(libRoot + "event");
+    })
 
     describe("trigger", function () {
         it("can invoke the webview execute javascript", function () {
-            spyOn(webview, "executeJavascript");
             event.trigger("foo", {"id": 123});
             expect(webview.executeJavascript).toHaveBeenCalledWith("webworks.event.trigger('foo', '" + JSON.stringify({"id": 123}) + "')");
         });

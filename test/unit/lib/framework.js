@@ -1,25 +1,27 @@
 var srcPath = __dirname + '/../../../lib/';
-var framework = require(srcPath + 'framework'),
+var framework,
     util = require(srcPath + "utils"),
-    webview = util.requireWebview(),
     Whitelist = require(srcPath + 'policy/whitelist').Whitelist,
     mock_request = {
         url: "http://www.dummy.com",
         allow: jasmine.createSpy(),
         deny: jasmine.createSpy()
+    },
+    webview = {
+        create: jasmine.createSpy().andCallFake(function (done) {
+            done();
+        }),
+        destroy: jasmine.createSpy(),
+        setURL: jasmine.createSpy(),
+        onRequest: jasmine.createSpy().andCallFake(function (handler) {
+            handler(mock_request);
+        }) 
     };
 
 describe("framework", function () {
     beforeEach(function () {
-        spyOn(webview, "create").andCallFake(function (done) {
-            done();
-        });
-        spyOn(webview, "destroy");
-        spyOn(webview, "setURL");
-        spyOn(webview, "onRequest").andCallFake(function (handler) {
-            handler(mock_request);
-        });
-
+        spyOn(util, "requireWebview").andReturn(webview);
+        framework = require(srcPath + 'framework'); 
         spyOn(console, "log");
     });
 
