@@ -28,7 +28,7 @@ describe("event", function () {
     beforeEach(function () {
         spyOn(util, "requireWebview").andReturn(webview);
         event = require(libRoot + "event");
-    })
+    });
 
     describe("trigger", function () {
         it("can invoke the webview execute javascript", function () {
