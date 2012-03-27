@@ -1,37 +1,51 @@
 var _event = require("lib/event"), _ppsUtils = require("lib/pps/ppsUtils"), _eventsMap = {
-	    batterystatus: {
-	    	eventName: "batterystatus",
-	        eventDetailsArr: [{
-	            path: "/pps/services/power/battery?wait,delta",
-	            fieldNameArr: [{
-	                eventName: "StateOfCharge",
-	                paramName: "level",
-	                formatValue: function(str) {
-	                    return parseInt(str)
-	                }
-	            }]
-	        }, {
-	            path: "/pps/services/power/charger?wait,delta",
-	            fieldNameArr: [{
-	                eventName: "ChargingState",
-	                paramName: "isPlugged",
-	                formatValue: function(str) {
-	                    return (str === "NC" ? false : true)
-	                }
-	            }]
-	        }],
-	        mode: 0
-	    }
-	}, 
-	_actionMap = {
-	    batterystatus: {
-	        context: require("lib/pps/ppsEvents"),
-	        event: _eventsMap.batterystatus,
-	        trigger: function(args) {
-	            _event.trigger("batterystatus", args);
-	        }
-	    }
-	};
+        batterystatus: {
+            eventName: "batterystatus",
+            eventDetailsArr: [{
+                path: "/pps/services/power/battery?wait,delta",
+                fieldNameArr: [{
+                    eventName: "StateOfCharge",
+                    paramName: "level",
+                    formatValue: function(str) {
+                        return parseInt(str)
+                    }
+                }]
+            }, {
+                path: "/pps/services/power/charger?wait,delta",
+                fieldNameArr: [{
+                    eventName: "ChargingState",
+                    paramName: "isPlugged",
+                    formatValue: function(str) {
+                        return (str === "NC" ? false : true)
+                    }
+                }]
+            }],
+            mode: 0
+        }
+    },
+    _actionMap = {
+        batterystatus: {
+            context: require("lib/pps/ppsEvents"),
+            event: _eventsMap.batterystatus,
+            trigger: function(args) {
+                _event.trigger("batterystatus", args);
+            }
+        },
+        pause: {
+            context: require("appEvents"),
+            event: "pause",
+            trigger: function () {
+                _event.trigger("pause");
+            }
+        },
+        resume: {
+            context: require("appEvents"),
+            event: "resume",
+            trigger: function () {
+                _event.trigger("resume");
+            }
+        }
+    };
 
 function callIfDefined(func, args) {
     if(func) {
