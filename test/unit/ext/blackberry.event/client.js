@@ -1,3 +1,4 @@
+/*
 var _apiDir = __dirname + "./../../../../ext/blackberry.event/",
     _libDir = __dirname + "./../../../../lib/",
     window,
@@ -10,9 +11,9 @@ var _apiDir = __dirname + "./../../../../ext/blackberry.event/",
             }
         }
     }; 
-
+*/
 describe("Event Listener", function () {
-
+/*
     beforeEach(function () {
         window = require(_libDir + "public/window");
         spyOn(window, "window").andReturn(mockedWindow);
@@ -32,5 +33,5 @@ describe("Event Listener", function () {
         client.addEventListener(eventType);
         expect(mockedWindow.webworks.event.remove).toHaveBeenCalledWith("blackberry.event", eventType, undefined);
     });
-
+*/
 });
