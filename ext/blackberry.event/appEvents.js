@@ -1,9 +1,9 @@
 var _framework = require("lib/framework");
 
 module.exports = {
-    addEventListener: function (action, trigger) {
-        if (action) {
-            switch (action.event) {
+    addEventListener: function (event, trigger) {
+        if (event) {
+            switch (event) {
             case "pause":
                 _framework.setOnPause(trigger);
                 break;
@@ -18,9 +18,9 @@ module.exports = {
             }
         }
     },
-    removeEventListener: function (action) {
-        if (action) {
-            switch (action.event) {
+    removeEventListener: function (event) {
+        if (event) {
+            switch (event) {
             case "pause":
                 _framework.setOnPause(null);
                 break;
